@@ -37,6 +37,8 @@ define('app', ['jquery', 'forest'], function($, _forest) {
 		});
 		
 		$("#start").click(function(ev) {
+			for (var y = 0; y < forest.getHeight(); ++y) { forest.ignite(0, y); };
+			updateView(forest);
 			stepTimer = setInterval(makeStep, 100);
 			ev.preventDefault();
 		});
