@@ -3,3 +3,5 @@
 .burning { background-color: #ff0000; }
 
 table { width: 100%; }
+
+.navbar-brand { float: none; }
