@@ -41,12 +41,10 @@ define('forest', ['jquery', 'array2d'], function($, a2d) {
 				}
 			}*/
 			
-			try {
-				if (c.get(x-1, y) == State.BURNING) return true;
-				if (c.get(x+1, y) == State.BURNING) return true;
-				if (c.get(x, y-1) == State.BURNING) return true;
-				if (c.get(x, y+1) == State.BURNING) return true;
-			} catch (err) {};
+			try { if (c.get(x-1, y) == State.BURNING) return true; } catch (err) {};
+			try { if (c.get(x+1, y) == State.BURNING) return true; } catch (err) {};
+			try { if (c.get(x, y-1) == State.BURNING) return true; } catch (err) {};
+			try { if (c.get(x, y+1) == State.BURNING) return true; } catch (err) {};
 			
 			return false;
 		};
