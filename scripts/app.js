@@ -5,13 +5,14 @@ define('app', ['jquery', 'forest'], function($, _forest) {
 	function start() {
     
     var initialTrees = 0;
+    var i = 0;
 		
     /* updates the board */
 		var updateView = function(f) {
 			f.render($(".board").get(0));
       $(".initial-trees-alive").text(initialTrees);
 			$(".trees-alive").text(f.countAlive());
-      $(".trees-alive-percentage").text(Math.round(100.0 * f.countAlive() / initialTrees) + '%');
+      $(".trees-alive-percentage").text(Math.round(100.0 * f.countAlive() / (initialTrees > 0 ? initialTrees : 1)) + '%');
 		};
     
     
@@ -34,7 +35,11 @@ define('app', ['jquery', 'forest'], function($, _forest) {
 			var change = forest.step();
 			updateView(forest);
 			
-			if (!change) clearInterval(stepTimer);
+			if (!change) {
+        clearInterval(stepTimer);
+        console.log(i + ', ' + $("#density").val() + ', ' + Math.round(100.0 * forest.countAlive() / (initialTrees > 0 ? initialTrees : 1)));
+        i = i + 1;
+      }
 		};
 		
     
@@ -50,7 +55,7 @@ define('app', ['jquery', 'forest'], function($, _forest) {
 		$("#start").click(function(ev) {
 			for (var y = 0; y < forest.getHeight(); ++y) { forest.ignite(0, y); };
 			updateView(forest);
-			stepTimer = setInterval(makeStep, 100);
+			stepTimer = setInterval(makeStep, 10);
 			ev.preventDefault();
 		});
 		
