@@ -1,17 +1,35 @@
 define('app', ['jquery', 'forest'], function($, _forest) {
 	
+  
+  /* starts the application */
 	function start() {
+    
+    var initialTrees = 0;
 		
+    /* updates the board */
 		var updateView = function(f) {
-			f.render($("#forest"));
-			$("#trees").val(f.alivePercentage() + '%');
+			f.render($(".board").get(0));
+      $(".initial-trees-alive").text(initialTrees);
+			$(".trees-alive").text(f.countAlive());
+      $(".trees-alive-percentage").text(Math.round(100.0 * f.countAlive() / initialTrees) + '%');
 		};
+    
+    
+    /* generates new map */
+    var generateMap = function() {
+      var f = new _forest.Forest(100, 100, $("#density").val());
+      initialTrees = f.countAlive();
+      return f;
+    };
+    
 		
-		var forest = new _forest.Forest(80, 25, $("#density").val());		
+		var forest = generateMap();
 		updateView(forest);
 		
 		var stepTimer;
 		
+    
+    /* computes step */
 		var makeStep = function() {
 			var change = forest.step();
 			updateView(forest);
@@ -19,23 +37,16 @@ define('app', ['jquery', 'forest'], function($, _forest) {
 			if (!change) clearInterval(stepTimer);
 		};
 		
+    
+    /* resets the board */
 		$("#reset").click(function(ev) {
-			forest = new _forest.Forest(80, 25, $("#density").val());
+			forest = generateMap();
 			updateView(forest);
 			ev.preventDefault();
 		});
 		
-		$("#fire").click(function(ev) {
-			for (var y = 0; y < forest.getHeight(); ++y) { forest.ignite(0, y); };
-			updateView(forest);
-			ev.preventDefault();
-		});
-		
-		$("#step").click(function(ev) {
-			makeStep();
-			ev.preventDefault();
-		});
-		
+    
+		/* starts the fire */
 		$("#start").click(function(ev) {
 			for (var y = 0; y < forest.getHeight(); ++y) { forest.ignite(0, y); };
 			updateView(forest);
@@ -43,12 +54,15 @@ define('app', ['jquery', 'forest'], function($, _forest) {
 			ev.preventDefault();
 		});
 		
+    
+    /* stops the fire */
 		$("#stop").click(function(ev) {
 			clearInterval(stepTimer);
 			ev.preventDefault();
 		});
 	}
 	
+  
 	return {
 		start: start
 	}

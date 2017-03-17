@@ -20,28 +20,38 @@
 	
 	<div class="container">
 		<div class="row">
-			<div class="col-md-2">
+			
+			<div class="col-md-offset-2 col-md-7 ">
+				<div id="forest">
+          <canvas class="board" width="400" height="400"></canvas>
+				</div>
+			</div>
+      
+      <div class="col-md-3">
 				<div>
 					<div class="form-group">
 						<label for="density">density:</label>
 						<input type="text" id="density" class="form-control" value="0.5"/>
 					</div>
 					<button type="button" id="reset" class="btn btn-default btn-block">Reset</button>
-					<button type="button" id="fire" class="btn btn-default btn-block">Start fire</button>
-					<button type="button" id="step" class="btn btn-default btn-block">Step</button>
 					<button type="button" id="start" class="btn btn-default btn-block">START</button>
 					<button type="button" id="stop" class="btn btn-default btn-block">STOP</button>
-					<div class="form-group">
-						<label for="trees">remaining trees:</label>
-						<input type="text" id="trees" class="form-control" value="0" disabled/>
-					</div>
 				</div>
+        
+        <br/>
+        
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            Results
+          </div>
+          <div class="panel-body">
+            <p>Initial trees: <span class="pull-right initial-trees-alive">0</span></p>
+            <p>Trees alive: <span class="pull-right trees-alive text-success">0</span></p>
+            <p>Trees alive (%): <span class="pull-right trees-alive-percentage text-danger">0</span></p>
+          </div>
+        </div>
 			</div>
-			
-			<div class="col-md-10">
-				<div id="forest">
-				</div>
-			</div>
+      
 		</div>
 	</div>
 	
